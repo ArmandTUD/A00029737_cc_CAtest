@@ -5,10 +5,22 @@ var x_res = 1080
 var y_res = 1920
 
 
-func _process(delta: float) -> void:	
+func _ready() -> void:
 	pass
 
+func _process(delta: float) -> void:	
+	pass
+	
+func buttonpress():
+	print("pressed")
+
 func create_faces() -> void:
+	var happy_label = $HappyLabel
+	var sad_label = $SadLabel
+	
+	var total_happy = 0
+	var total_sad = 0
+	
 	var faces_generated = randi_range(1, 10)
 
 	for i in range(faces_generated):
@@ -19,8 +31,12 @@ func create_faces() -> void:
 		var face_type = randi_range(1, 2)
 		var random_face_color = Color8(randi_range(1,250),randi_range(1,250),randi_range(1,250))
 		
+	
+		
 		#happy faces
 		if face_type == 1:
+			total_happy = total_happy + 1
+			
 			#Face
 			draw_circle(pos, radius, random_face_color)
 			
@@ -48,6 +64,8 @@ func create_faces() -> void:
 			
 		#sad faces
 		elif face_type == 2:
+			total_sad = total_sad + 1
+			
 			#Face
 			draw_circle(pos, radius, random_face_color)
 			
@@ -72,7 +90,15 @@ func create_faces() -> void:
 				var eye_pos = Vector2((pos[0] - (radius / 2)) + (eye_distance*j), pos[1] - (radius/2.5))
 				draw_circle(eye_pos, radius/10, random_line_color)
 				pass
+				
+	sad_label.text = "Sad faces: " + str(total_sad)
+	happy_label.text = "Happy faces: " + str(total_happy)
+	
 
 
 func _draw() -> void:
 	create_faces()
+
+
+func _on_button_pressed() -> void:
+	queue_redraw()
