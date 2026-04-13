@@ -4,15 +4,15 @@ extends Node2D
 var x_res = 1080
 var y_res = 1920
 
+#conditional
+var should_draw = false
+
 
 func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:	
 	pass
-	
-func buttonpress():
-	print("pressed")
 
 func create_faces() -> void:
 	var happy_label = $HappyLabel
@@ -97,8 +97,10 @@ func create_faces() -> void:
 
 
 func _draw() -> void:
-	create_faces()
+	if should_draw == true:
+		create_faces()
 
 
 func _on_button_pressed() -> void:
+	should_draw = true
 	queue_redraw()
